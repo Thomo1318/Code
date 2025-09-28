@@ -1,0 +1,30 @@
+# Function to calculate GST
+def calculate_gst(prices):
+    gst_list = [round(price * 0.0909, 4) for price in prices]
+    return gst_list
+
+# Read prices from file
+def read_prices_from_file(file_name):
+    try:
+        with open(file_name, 'r') as file:
+            # Read lines and convert them to float
+            prices = [float(line.strip()) for line in file if line.strip()]
+        return prices
+    except FileNotFoundError:
+        print(f"Error: The file '{file_name}' does not exist.")
+        return []
+    except ValueError:
+        print("Error: One or more lines in the file cannot be converted to a float.")
+        return []
+
+# Main code execution
+if __name__ == "__main__":
+    file_name = 'GST_Calc_Prices.txt'
+    prices = read_prices_from_file(file_name)
+    
+    if prices:
+        gst_amounts = calculate_gst(prices)
+        for price, gst in zip(prices, gst_amounts):
+            print(f"Price: ${price:.2f}, GST: ${gst:.4f}") # Printing price to 2 decimal and GST to 4 decimal
+
+
